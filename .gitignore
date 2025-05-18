@@ -1,39 +1,57 @@
-# Angular/Node.js related
-/frontend/node_modules
-/frontend/.angular
-/frontend/dist
-/frontend/.env
+# Node modules mindenhol
+node_modules/
+*/node_modules/
+**/node_modules/
 
-# Backend 
-/backend/venv
-/backend/__pycache__
-/backend/*.py[cod]
-/backend/*$py.class
-/backend/.env
+# Angular generált fájlok
+.angular/
+*/.angular/
+**/.angular/
 
-# IDE és OS specifikus fájlok
+# Dist könyvtárak (build kimenet)
+dist/
+*/dist/
+**/dist/
+
+# Környezeti változók fájlok
+.env
+*/.env
+**/.env
+
+# Python virtuális környezet és cache fájlok
+venv/
+*/venv/
+**/__pycache__/
+*.py[cod]
+*$py.class
+
+# IDE és editor fájlok
 .idea/
 .vscode/
+*.sublime*
 .DS_Store
 Thumbs.db
-*.swp
-*.swo
-*.sublime*
+
+# Log fájlok és hibakeresési naplók
+*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+logs/
 
-# Egyéb
-/coverage
-/.sass-cache
-/connect.lock
-/typings
-/out-tsc
-/.nyc_output
-/.pnp
+# Ideiglenes fájlok és cache-k
+.sass-cache/
+connect.lock/
+coverage/
+typings/
+out-tsc/
+.nyc_output/
+.pnp/
 .pnp.js
-/logs
-*.log
-/build
-/tmp
-/temp
+tmp/
+temp/
+build/
+
+# Package lock fájlok (opcionális, de általában nem verziókezelt, kivéve ha csapatmunkában fontos)
+# package-lock.json
+# yarn.lock
