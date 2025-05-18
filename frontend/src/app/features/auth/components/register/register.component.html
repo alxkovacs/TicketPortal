@@ -1,0 +1,77 @@
+<div class="register-container">
+  <div class="register-card">
+    <h2>{{ 'auth.register' | translate }}</h2>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="name">{{ 'auth.name' | translate }}</label>
+        <input
+          type="text"
+          id="name"
+          formControlName="name"
+          [placeholder]="'auth.namePlaceholder' | translate"
+        >
+        <div class="error" *ngIf="registerForm.get('name')?.touched && registerForm.get('name')?.errors?.['required']">
+          {{ 'auth.nameRequired' | translate }}
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="email">{{ 'auth.email' | translate }}</label>
+        <input
+          type="email"
+          id="email"
+          formControlName="email"
+          [placeholder]="'auth.emailPlaceholder' | translate"
+        >
+        <div class="error" *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.errors?.['required']">
+          {{ 'auth.emailRequired' | translate }}
+        </div>
+        <div class="error" *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.errors?.['email']">
+          {{ 'auth.emailInvalid' | translate }}
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="password">{{ 'auth.password' | translate }}</label>
+        <input
+          type="password"
+          id="password"
+          formControlName="password"
+          [placeholder]="'auth.passwordPlaceholder' | translate"
+        >
+        <div class="error" *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.errors?.['required']">
+          {{ 'auth.passwordRequired' | translate }}
+        </div>
+        <div class="error" *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.errors?.['minlength']">
+          {{ 'auth.passwordMinLength' | translate }}
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="confirmPassword">{{ 'auth.confirmPassword' | translate }}</label>
+        <input
+          type="password"
+          id="confirmPassword"
+          formControlName="confirmPassword"
+          [placeholder]="'auth.confirmPasswordPlaceholder' | translate"
+        >
+        <div class="error" *ngIf="registerForm.get('confirmPassword')?.touched && registerForm.get('confirmPassword')?.errors?.['required']">
+          {{ 'auth.confirmPasswordRequired' | translate }}
+        </div>
+        <div class="error" *ngIf="registerForm.get('confirmPassword')?.touched && registerForm.errors?.['passwordMismatch']">
+          {{ 'auth.passwordsDontMatch' | translate }}
+        </div>
+      </div>
+
+      <button type="submit" [disabled]="registerForm.invalid">
+        {{ 'auth.register' | translate }}
+      </button>
+    </form>
+
+    <div class="login-link">
+      {{ 'auth.haveAccount' | translate }}
+      <a routerLink="/auth/login">{{ 'auth.login' | translate }}</a>
+    </div>
+  </div>
+</div> 

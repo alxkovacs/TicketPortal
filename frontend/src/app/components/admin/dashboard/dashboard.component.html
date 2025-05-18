@@ -1,0 +1,187 @@
+<div class="container-fluid mt-4">
+  <div class="row">
+    <div class="col-12">
+      <h2 class="dashboard-title">
+        <i class="fas fa-chart-line me-2"></i>Admin Vezérlőpult
+      </h2>
+      
+      <!-- Töltési állapot -->
+      <div *ngIf="loading" class="text-center p-5">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+        <p class="mt-3">Adatok betöltése...</p>
+      </div>
+      
+      <!-- Hiba üzenet -->
+      <div *ngIf="error" class="alert alert-danger">
+        {{ error }}
+      </div>
+    </div>
+  </div>
+  
+  <!-- Statisztikai kártyák -->
+  <div *ngIf="!loading" class="row mt-4">
+    <div class="col-lg-4 mb-4">
+      <div class="card stat-card bg-primary text-white h-100">
+        <div class="card-body">
+          <div class="row align-items-center">
+            <div class="col-3">
+              <i class="fas fa-calendar fa-3x"></i>
+            </div>
+            <div class="col-9 text-end">
+              <h3>{{ totalEvents || "0" }}</h3>
+              <div>Esemény</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-lg-4 mb-4">
+      <div class="card stat-card bg-success text-white h-100">
+        <div class="card-body">
+          <div class="row align-items-center">
+            <div class="col-3">
+              <i class="fas fa-ticket-alt fa-3x"></i>
+            </div>
+            <div class="col-9 text-end">
+              <h3>{{ totalActiveTickets || "0" }}</h3>
+              <div>Megvásárolt jegyek</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-lg-4 mb-4">
+      <div class="card stat-card bg-info text-white h-100">
+        <div class="card-body">
+          <div class="row align-items-center">
+            <div class="col-3">
+              <i class="fas fa-money-bill-wave fa-3x"></i>
+            </div>
+            <div class="col-9 text-end">
+              <h3>{{ (totalSales || "0") + " Ft" }}</h3>
+              <div>Összes bevétel</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+
+  </div>
+  
+  <!-- Statisztikai adatok egyszerűsített megjelenítése -->
+  <div *ngIf="!loading" class="row mt-4">
+    <div class="col-xl-6 mb-4">
+      <div class="card chart-card h-100">
+        <div class="card-header">
+          <h5 class="card-title">
+            <i class="fas fa-chart-bar me-2"></i>Események havi eloszlása
+          </h5>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Hónap</th>
+                  <th>Események száma</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let month of ['Január', 'Február', 'Március', 'Április', 'Május', 'Június', 'Július', 'Augusztus', 'Szeptember', 'Október', 'November', 'December']; let i = index">
+                  <td>{{ month }}</td>
+                  <td>{{ getEventCountByMonth(i) }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-xl-6 mb-4">
+      <div class="card h-100">
+        <div class="card-header">
+          <h5 class="card-title">
+            <i class="fas fa-list me-2"></i>Legközelebbi események
+          </h5>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>Esemény</th>
+                  <th>Dátum</th>
+                  <th>Elérhető jegyek</th>
+                  <th>Műveletek</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let event of events">
+                  <td>{{ event.title }}</td>
+                  <td>{{ formatDate(event.date) }}</td>
+                  <td>{{ getAvailableTickets(event) }}</td>
+                  <td>
+                    <button class="btn btn-sm btn-warning me-1" (click)="editEvent(event._id)">
+                      <i class="fas fa-edit"></i>
+                    </button>
+                    <button class="btn btn-sm btn-info" (click)="viewEvent(event._id)">
+                      <i class="fas fa-eye"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr *ngIf="events.length === 0">
+                  <td colspan="4" class="text-center">Nincs jövőbeli esemény a rendszerben</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card-footer d-flex justify-content-end">
+          <button class="btn btn-primary" (click)="navigateToEvents()">Összes esemény</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Jegyek kategóriánként -->
+  <div *ngIf="!loading" class="row mt-4">
+    <div class="col-12 mb-4">
+      <div class="card chart-card h-100">
+        <div class="card-header">
+          <h5 class="card-title">
+            <i class="fas fa-chart-pie me-2"></i>Jegyek kategóriánként
+          </h5>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Kategória</th>
+                  <th>Jegyek száma</th>
+                  <th>Bevétel (Ft)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let category of getTicketCategories()">
+                  <td>{{ category.name }}</td>
+                  <td>{{ category.count }}</td>
+                  <td>{{ category.revenue }} Ft</td>
+                </tr>
+                <tr *ngIf="getTicketCategories().length === 0">
+                  <td colspan="3" class="text-center">Nincs megjeleníthető adat</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

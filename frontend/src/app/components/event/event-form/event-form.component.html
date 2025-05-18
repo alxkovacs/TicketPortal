@@ -1,0 +1,169 @@
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="text-center">{{ isEditMode ? 'Esemény szerkesztése' : 'Új esemény' }}</h3>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="eventForm" (ngSubmit)="onSubmit()">
+            <div class="mb-3">
+              <label for="title" class="form-label">Cím</label>
+              <input
+                type="text"
+                class="form-control"
+                id="title"
+                formControlName="title"
+                [class.is-invalid]="eventForm.get('title')?.invalid && eventForm.get('title')?.touched"
+              >
+              <div class="invalid-feedback" *ngIf="eventForm.get('title')?.invalid && eventForm.get('title')?.touched">
+                A cím megadása kötelező
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="description" class="form-label">Leírás</label>
+              <textarea
+                class="form-control"
+                id="description"
+                formControlName="description"
+                rows="4"
+                [class.is-invalid]="eventForm.get('description')?.invalid && eventForm.get('description')?.touched"
+              ></textarea>
+              <div class="invalid-feedback" *ngIf="eventForm.get('description')?.invalid && eventForm.get('description')?.touched">
+                A leírás megadása kötelező
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="date" class="form-label">Dátum és időpont</label>
+              <input
+                type="datetime-local"
+                class="form-control"
+                id="date"
+                formControlName="date"
+                [class.is-invalid]="eventForm.get('date')?.invalid && eventForm.get('date')?.touched"
+              >
+              <div class="invalid-feedback" *ngIf="eventForm.get('date')?.invalid && eventForm.get('date')?.touched">
+                A dátum és időpont megadása kötelező
+              </div>
+              <small class="form-text text-muted">Kérjük add meg az esemény dátumát és időpontját.</small>
+            </div>
+
+            <div class="mb-3">
+              <label for="location" class="form-label">Helyszín</label>
+              <input
+                type="text"
+                class="form-control"
+                id="location"
+                formControlName="location"
+                [class.is-invalid]="eventForm.get('location')?.invalid && eventForm.get('location')?.touched"
+              >
+              <div class="invalid-feedback" *ngIf="eventForm.get('location')?.invalid && eventForm.get('location')?.touched">
+                A helyszín megadása kötelező
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="imageUrl" class="form-label">Kép URL</label>
+              <input
+                type="url"
+                class="form-control"
+                id="imageUrl"
+                formControlName="imageUrl"
+              >
+            </div>
+
+            <div formArrayName="ticketCategories">
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4>Jegy kategóriák</h4>
+                <button type="button" class="btn btn-primary" (click)="addTicketCategory()">
+                  Kategória hozzáadása
+                </button>
+              </div>
+
+              <div
+                *ngFor="let category of ticketCategories.controls; let i = index"
+                [formGroupName]="i"
+                class="card mb-3"
+              >
+                <div class="card-body">
+                  <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="card-title mb-0">Kategória {{ i + 1 }}</h5>
+                    <button
+                      type="button"
+                      class="btn btn-danger btn-sm"
+                      (click)="removeTicketCategory(i)"
+                    >
+                      Törlés
+                    </button>
+                  </div>
+
+                  <div class="mb-3">
+                    <label [for]="'name' + i" class="form-label">Név</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      [id]="'name' + i"
+                      formControlName="name"
+                      [class.is-invalid]="ticketCategories.at(i).get('name')?.invalid && ticketCategories.at(i).get('name')?.touched"
+                    >
+                    <div
+                      class="invalid-feedback"
+                      *ngIf="ticketCategories.at(i).get('name')?.invalid && ticketCategories.at(i).get('name')?.touched"
+                    >
+                      A név megadása kötelező
+                    </div>
+                  </div>
+
+                  <div class="mb-3">
+                    <label [for]="'price' + i" class="form-label">Ár</label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      [id]="'price' + i"
+                      formControlName="price"
+                      [class.is-invalid]="ticketCategories.at(i).get('price')?.invalid && ticketCategories.at(i).get('price')?.touched"
+                    >
+                    <div
+                      class="invalid-feedback"
+                      *ngIf="ticketCategories.at(i).get('price')?.invalid && ticketCategories.at(i).get('price')?.touched"
+                    >
+                      Az ár megadása kötelező és nem lehet negatív
+                    </div>
+                  </div>
+
+                  <div class="mb-3">
+                    <label [for]="'availableSeats' + i" class="form-label">Elérhető jegyek</label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      [id]="'availableSeats' + i"
+                      formControlName="availableSeats"
+                      [class.is-invalid]="ticketCategories.at(i).get('availableSeats')?.invalid && ticketCategories.at(i).get('availableSeats')?.touched"
+                    >
+                    <div
+                      class="invalid-feedback"
+                      *ngIf="ticketCategories.at(i).get('availableSeats')?.invalid && ticketCategories.at(i).get('availableSeats')?.touched"
+                    >
+                      Az elérhető jegyek számának megadása kötelező és nem lehet negatív
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="d-grid gap-2">
+              <button type="submit" class="btn btn-primary btn-lg mb-2" [disabled]="eventForm.invalid || loading">
+                {{ isEditMode ? 'Frissítés' : 'Létrehozás' }}
+              </button>
+              <button type="button" class="btn btn-secondary btn-lg mb-2" (click)="router.navigate(['/events'])">
+                Mégse
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 

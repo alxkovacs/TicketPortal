@@ -1,0 +1,74 @@
+<div class="container mt-4">
+  <div *ngIf="loading" class="text-center">
+    <div class="spinner-border" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+  <div *ngIf="error" class="alert alert-danger">
+    {{ error }}
+  </div>
+
+  <div *ngIf="event && !loading" class="row">
+    <div class="col-md-8">
+      <div class="card">
+        <img *ngIf="event.imageUrl" [src]="event.imageUrl" class="card-img-top" [alt]="event.title">
+        <div class="card-body">
+          <h2 class="card-title">{{ event.title }}</h2>
+          <p class="card-text">{{ event.description }}</p>
+          <ul class="list-unstyled">
+            <li><strong>Dátum:</strong> {{ event.date | date:'yyyy.MM.dd HH:mm' }}</li>
+            <li><strong>Helyszín:</strong> {{ event.location }}</li>
+            <li><strong>Elérhető jegyek:</strong> {{ event.availableTickets !== undefined && event.availableTickets !== null ? event.availableTickets : 'Nincs információ' }}</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card mt-4">
+        <div class="card-header">
+          <h3>Jegy kategóriák</h3>
+        </div>
+        <div class="card-body">
+          <div *ngFor="let category of event.ticketCategories" class="mb-3">
+            <h5>{{ category.name }}</h5>
+            <p><strong>Ár:</strong> {{ category.price }} Ft</p>
+            <p><strong>Elérhető jegyek:</strong> {{ category.availableSeats }}</p>
+            <button
+              *ngIf="authService.isAuthenticated() && category.availableSeats > 0"
+              class="btn btn-primary"
+              (click)="purchaseTicket(category._id)"
+            >
+              Jegyvásárlás
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- A jobb oldali panel csak bejelentkezett felhasználóknál jelenjen meg -->
+    <div class="col-md-4" *ngIf="authService.isAuthenticated() || authService.getUserRole() === 'ADMIN'">
+      <div class="card">
+        <div class="card-body">
+          <!-- A jegyvásárlás gomb csak akkor jelenjen meg, ha van legalább egy kategória -->
+          <button
+            *ngIf="authService.isAuthenticated() && event.ticketCategories && event.ticketCategories.length > 0"
+            class="btn btn-primary w-100 mb-2"
+            (click)="navigateToPurchase()"
+            [disabled]="event.availableTickets === 0"
+          >
+            Gyors jegyvásárlás
+          </button>
+          
+          <!-- Az admin gomb marad -->
+          <button
+            *ngIf="authService.getUserRole() === 'ADMIN'"
+            class="btn btn-warning w-100"
+            (click)="editEvent()"
+          >
+            Esemény szerkesztése
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 

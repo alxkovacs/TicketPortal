@@ -1,0 +1,146 @@
+// Media queries
+@mixin media-xs {
+  @media (max-width: #{$breakpoint-sm - 1}) {
+    @content;
+  }
+}
+
+@mixin media-sm {
+  @media (min-width: $breakpoint-sm) and (max-width: #{$breakpoint-md - 1}) {
+    @content;
+  }
+}
+
+@mixin media-md {
+  @media (min-width: $breakpoint-md) and (max-width: #{$breakpoint-lg - 1}) {
+    @content;
+  }
+}
+
+@mixin media-lg {
+  @media (min-width: $breakpoint-lg) and (max-width: #{$breakpoint-xl - 1}) {
+    @content;
+  }
+}
+
+@mixin media-xl {
+  @media (min-width: $breakpoint-xl) {
+    @content;
+  }
+}
+
+// Flexbox
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+// Typography
+@mixin typography($size, $weight: 400, $line-height: 1.5) {
+  font-size: $size;
+  font-weight: $weight;
+  line-height: $line-height;
+}
+
+// Buttons
+@mixin button-base {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: $spacing-sm $spacing-md;
+  border-radius: $border-radius-sm;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: all $transition-fast;
+  cursor: pointer;
+  border: none;
+  outline: none;
+
+  &:hover {
+    opacity: 0.9;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+@mixin button-primary {
+  @include button-base;
+  background-color: $primary-color;
+  color: white;
+}
+
+@mixin button-secondary {
+  @include button-base;
+  background-color: $secondary-color;
+  color: white;
+}
+
+@mixin button-outlined {
+  @include button-base;
+  background-color: transparent;
+  border: 1px solid $primary-color;
+  color: $primary-color;
+}
+
+// Cards
+@mixin card-base {
+  background-color: $background-paper;
+  border-radius: $border-radius-md;
+  box-shadow: $shadow-sm;
+  padding: $spacing-md;
+  transition: box-shadow $transition-normal;
+
+  &:hover {
+    box-shadow: $shadow-md;
+  }
+}
+
+// Forms
+@mixin form-input {
+  width: 100%;
+  padding: $spacing-sm;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: $border-radius-sm;
+  font-size: $font-size-base;
+  transition: border-color $transition-fast;
+
+  &:focus {
+    border-color: $primary-color;
+    outline: none;
+  }
+
+  &:disabled {
+    background-color: rgba(0, 0, 0, 0.05);
+    cursor: not-allowed;
+  }
+}
+
+// Animations
+@mixin fade-in {
+  animation: fadeIn $transition-normal;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+} 

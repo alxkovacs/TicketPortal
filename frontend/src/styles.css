@@ -1,0 +1,228 @@
+/* You can add global styles to this file, and also import other style files */
+@import 'bootstrap/dist/css/bootstrap.min.css';
+
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content {
+  flex: 1 0 auto;
+}
+
+.container {
+  padding: 20px;
+}
+
+/* Navbar styles */
+.navbar {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 1000;
+}
+
+.navbar-brand {
+  font-weight: 600;
+  color: #007bff !important;
+  text-decoration: none;
+}
+
+.nav-link {
+  font-weight: 500;
+  cursor: pointer !important;
+  position: relative;
+  z-index: 2;
+  padding: 0.5rem 1rem;
+  display: block;
+  text-decoration: none;
+  color: #007bff !important;
+  transition: color 0.15s ease-in-out;
+}
+
+.nav-link:hover {
+  color: #0056b3 !important;
+}
+
+.nav-link.active {
+  color: #0056b3 !important;
+  font-weight: 600;
+}
+
+.navbar-nav {
+  position: relative;
+  z-index: 2;
+}
+
+.navbar-collapse {
+  position: relative;
+  z-index: 2;
+}
+
+/* Button styles */
+.btn {
+  margin: 5px;
+  position: relative;
+  z-index: 2;
+  pointer-events: auto;
+  cursor: pointer !important;
+  display: inline-block;
+  text-align: center;
+  vertical-align: middle;
+  user-select: none;
+  background-color: transparent;
+  border: 1px solid transparent;
+  line-height: 1.5;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+}
+
+.btn:not(:disabled):not(.disabled) {
+  cursor: pointer !important;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+  color: white !important;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+  border-color: #0056b3;
+  color: white !important;
+  transform: translateY(-1px);
+}
+
+.btn-success {
+  background-color: #28a745;
+  border-color: #28a745;
+  color: white !important;
+}
+
+.btn-success:hover {
+  background-color: #218838;
+  border-color: #1e7e34;
+  color: white !important;
+  transform: translateY(-1px);
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  border-color: #dc3545;
+  color: white !important;
+}
+
+.btn-danger:hover {
+  background-color: #c82333;
+  border-color: #bd2130;
+  color: white !important;
+  transform: translateY(-1px);
+}
+
+.btn-warning {
+  background-color: #ffc107;
+  border-color: #ffc107;
+  color: #212529 !important;
+}
+
+.btn-warning:hover {
+  background-color: #e0a800;
+  border-color: #d39e00;
+  color: #212529 !important;
+  transform: translateY(-1px);
+}
+
+/* Card styles */
+.card {
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.card-footer {
+  background-color: transparent;
+  border-top: 1px solid rgba(0, 0, 0, 0.125);
+  padding: 1rem;
+}
+
+/* Flex container styles */
+.d-flex {
+  display: flex;
+  position: relative;
+  z-index: 1;
+}
+
+.justify-content-between {
+  justify-content: space-between;
+}
+
+.align-items-center {
+  align-items: center;
+}
+
+/* Form styles */
+.form-control:focus {
+  border-color: #80bdff;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+/* Alert styles */
+.alert {
+  margin-bottom: 1rem;
+  border-radius: 4px;
+  padding: 1rem;
+}
+
+.alert-info {
+  background-color: #d1ecf1;
+  border-color: #bee5eb;
+  color: #0c5460;
+}
+
+/* Spinner styles */
+.spinner-border {
+  width: 3rem;
+  height: 3rem;
+}
+
+/* Grid styles */
+.d-grid {
+  display: grid;
+  position: relative;
+  z-index: 1;
+}
+
+.gap-2 {
+  gap: 0.5rem;
+}
+
+/* Table styles */
+.table th {
+  font-weight: 600;
+  background-color: #f8f9fa;
+}
+
+.table td {
+  vertical-align: middle;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+} 

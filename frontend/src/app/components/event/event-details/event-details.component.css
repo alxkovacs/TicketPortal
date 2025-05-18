@@ -1,0 +1,12 @@
+.card {
+  margin-bottom: 1rem;
+}
+
+.card-img-top {
+  max-height: 400px;
+  object-fit: cover;
+}
+
+.btn {
+  margin-right: 0.5rem;
+} 

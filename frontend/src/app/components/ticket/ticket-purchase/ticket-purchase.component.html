@@ -1,0 +1,76 @@
+<div class="container mt-4">
+  <div *ngIf="loading" class="text-center">
+    <div class="spinner-border" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+  <div *ngIf="error" class="alert alert-danger">
+    {{ error }}
+  </div>
+
+  <div *ngIf="event && !loading" class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">{{ event.title }}</h3>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="purchaseForm" (ngSubmit)="onSubmit()">
+            <div class="mb-3">
+              <label for="categoryId" class="form-label">Jegy kategória</label>
+              <select
+                id="categoryId"
+                class="form-select"
+                formControlName="categoryId"
+                (change)="onCategoryChange()"
+              >
+                <option value="">Válassz kategóriát</option>
+                <option
+                  *ngFor="let category of event.ticketCategories"
+                  [value]="category._id"
+                  [disabled]="category.availableSeats <= 0"
+                >
+                  {{ category.name }} - {{ category.price }} Ft ({{ category.availableSeats }} elérhető)
+                </option>
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label for="quantity" class="form-label">Darabszám</label>
+              <input
+                type="number"
+                id="quantity"
+                class="form-control"
+                formControlName="quantity"
+                [min]="1"
+                [max]="selectedCategory?.availableSeats ?? null"
+              >
+            </div>
+
+            <div *ngIf="selectedCategory" class="mb-3">
+              <h5>Összesen: {{ selectedCategory.price * purchaseForm.get('quantity')?.value }} Ft</h5>
+              <div class="alert" [ngClass]="{
+                'alert-warning': selectedCategory.availableSeats <= 10 && selectedCategory.availableSeats > 0,
+                'alert-danger': selectedCategory.availableSeats <= 5 && selectedCategory.availableSeats > 0,
+                'alert-info': selectedCategory.availableSeats > 10
+              }">
+                <strong>{{ selectedCategory.availableSeats }}</strong> jegy elérhető ebben a kategóriában
+              </div>
+            </div>
+
+            <div class="d-grid">
+              <button
+                type="submit"
+                class="btn btn-primary"
+                [disabled]="purchaseForm.invalid || !selectedCategory"
+              >
+                Vásárlás
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 

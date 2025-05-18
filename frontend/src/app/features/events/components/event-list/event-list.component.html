@@ -1,0 +1,31 @@
+<div *ngIf="loading" class="d-flex justify-content-center align-items-center" style="min-height: 200px;">
+  <div class="spinner-border text-primary" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+</div>
+
+<div class="event-list" *ngIf="!loading && events.length > 0">
+  <h2>Upcoming Events</h2>
+  <div class="event-grid">
+    <div *ngFor="let event of events" class="event-card">
+      <div class="event-image">
+        <img [src]="event.imageUrl" [alt]="event.name || event.title">
+      </div>
+      <div class="event-content">
+        <h3>{{ event.name || event.title }}</h3>
+        <p class="event-date">{{ event.date | date }}</p>
+        <p class="event-location">{{ event.location }}</p>
+        <p *ngIf="event.price">{{ event.price | currency }}</p>
+        <p *ngIf="event.availableTickets">Available: {{ event.availableTickets }} / {{ event.totalTickets }}</p>
+        <div class="event-actions">
+          <button (click)="viewEvent(event.id)" class="btn btn-primary">View Details</button>
+          <button (click)="buyTickets(event.id)" class="btn btn-success">Buy Tickets</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="!loading && events.length === 0" class="alert alert-info">
+  No events found.
+</div> 

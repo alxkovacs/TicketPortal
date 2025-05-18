@@ -1,0 +1,66 @@
+<nav class="navbar navbar-expand-lg sticky-top">
+  <div class="container">
+    <!-- Brand logo és név -->
+    <a class="navbar-brand" [routerLink]="['/']">
+      <i class="fas fa-ticket-alt me-2"></i>
+      <span class="brand-text">AliTicket</span>
+    </a>
+    
+    <!-- Mobil nézet hamburger gomb -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <!-- Menüpontok -->
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <!-- Bal oldali menüpontok -->
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/events']" routerLinkActive="active" 
+             [routerLinkActiveOptions]="{exact: true}">
+            <i class="fas fa-calendar-alt me-1"></i> Események
+          </a>
+        </li>
+        <!-- Admin Dashboard menüpont csak admin felhasználók számára -->
+        <li class="nav-item" *ngIf="authService.isAuthenticated() && authService.isAdmin()">
+          <a class="nav-link dashboard-btn" [routerLink]="['/admin/dashboard']" routerLinkActive="active" 
+             [routerLinkActiveOptions]="{exact: true}">
+            <i class="fas fa-chart-line me-1"></i> Dashboard
+          </a>
+        </li>
+        <!-- Normál felhasználók saját jegyei -->
+        <li class="nav-item" *ngIf="authService.isAuthenticated()">
+          <a class="nav-link" [routerLink]="['/tickets']" routerLinkActive="active" 
+             [routerLinkActiveOptions]="{exact: true}">
+            <i class="fas fa-ticket-alt me-1"></i> Jegyeim
+          </a>
+        </li>
+      </ul>
+      
+      <!-- Jobb oldali menüpontok (bejelentkezés/kijelentkezés) -->
+      <ul class="navbar-nav ms-auto">
+        <!-- Nem bejelentkezett felhasználók látják -->
+        <li class="nav-item" *ngIf="!authService.isAuthenticated()">
+          <a class="nav-link login-btn" [routerLink]="['/auth/login']" routerLinkActive="active" 
+             [routerLinkActiveOptions]="{exact: true}">
+            <i class="fas fa-sign-in-alt me-1"></i> Bejelentkezés
+          </a>
+        </li>
+        <li class="nav-item" *ngIf="!authService.isAuthenticated()">
+          <a class="nav-link register-btn" [routerLink]="['/auth/register']" routerLinkActive="active" 
+             [routerLinkActiveOptions]="{exact: true}">
+            <i class="fas fa-user-plus me-1"></i> Regisztráció
+          </a>
+        </li>
+        
+        <!-- Bejelentkezett felhasználók látják -->
+        <li class="nav-item" *ngIf="authService.isAuthenticated()">
+          <a class="nav-link logout-btn" (click)="logout()">
+            <i class="fas fa-sign-out-alt me-1"></i> Kijelentkezés
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

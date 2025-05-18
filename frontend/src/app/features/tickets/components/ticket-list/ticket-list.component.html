@@ -1,0 +1,20 @@
+<div class="ticket-list">
+  <h2>My Tickets</h2>
+  <div class="ticket-grid">
+    <div *ngFor="let ticket of tickets$ | async" class="ticket-card">
+      <div class="ticket-header">
+        <h3>{{ ticket.event.name }}</h3>
+        <span class="ticket-status" [ngClass]="ticket.status">{{ ticket.status }}</span>
+      </div>
+      <div class="ticket-details">
+        <p><strong>Date:</strong> {{ ticket.event.date | date }}</p>
+        <p><strong>Location:</strong> {{ ticket.event.location }}</p>
+        <p><strong>Price:</strong> {{ ticket.price | currency }}</p>
+        <p><strong>Quantity:</strong> {{ ticket.quantity }}</p>
+      </div>
+      <div class="ticket-actions">
+        <button *ngIf="ticket.status === 'active'" (click)="cancelTicket(ticket.id)" class="btn btn-danger">Cancel Ticket</button>
+      </div>
+    </div>
+  </div>
+</div> 
