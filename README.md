@@ -1,71 +1,71 @@
-# Ticket Sales Portal
+# Jegyértékesítő Portál
 
-A full-stack ticket sales portal application built with the MEAN stack (MongoDB, Express.js, Angular, Node.js) using TypeScript.
+Egy full-stack jegyértékesítő portál alkalmazás, amely a MEAN stack (MongoDB, Express.js, Angular, Node.js) technológiákra épül, TypeScript használatával.
 
-## Features
+## Funkciók
 
-- User authentication and authorization
-- Event management for organizers
-- Ticket purchasing system
-- Role-based access control (Admin, Users, Guests)
-- Event browsing and filtering
-- Ticket reservation and purchase
-- Dashboard for event organizers
+- Felhasználói autentikáció és jogosultságkezelés
+- Eseménykezelés szervezők számára
+- Jegyvásárlási rendszer
+- Szerepkör alapú hozzáférés-vezérlés (Admin, Felhasználók, Vendégek)
+- Események böngészése és szűrése
+- Jegyfoglalás és vásárlás
+- Irányítópult eseményszervezők számára
 
-## Project Structure
+## Projekt Struktúra
 
 ```
 ticket-portal/
-├── frontend/           # Angular application
-├── backend/            # Node.js/Express application
+├── frontend/           # Angular alkalmazás
+├── backend/            # Node.js/Express alkalmazás
 └── README.md
 ```
 
-## Prerequisites
+## Előfeltételek
 
-- Node.js (v14 or higher)
+- Node.js (v14 vagy újabb)
 - Angular CLI
 - MongoDB
-- npm or yarn
+- npm vagy yarn
 
-## Installation
+## Telepítés
 
-1. Clone the repository
-2. Install dependencies:
+1. Klónozza a repository-t
+2. Függőségek telepítése:
    ```bash
-   # Install backend dependencies
+   # Backend függőségek telepítése
    cd backend
    npm install
 
-   # Install frontend dependencies
+   # Frontend függőségek telepítése
    cd ../frontend
    npm install
    ```
 
-3. Configure environment variables:
-   - Create `.env` file in backend directory
-   - Set up MongoDB connection string
-   - Configure JWT secret
+3. Környezeti változók konfigurálása:
+   - Hozzon létre `.env` fájlt a backend könyvtárban
+   - Állítsa be a MongoDB kapcsolati stringet
+   - Konfigurálja a JWT titkosítási kulcsot
 
-4. Start the applications:
+4. Alkalmazások indítása:
    ```bash
-   # Start backend server
+   # Backend szerver indítása
    cd backend
    npm run dev
 
-   # Start frontend application
+   # Frontend alkalmazás indítása
    cd frontend
    ng serve
    ```
 
-## API Documentation
+## API Dokumentáció
 
-The backend provides RESTful APIs for:
-- User authentication
-- Event management
-- Ticket operations
-- User management
+A backend RESTful API-kat biztosít a következőkhöz:
+- Felhasználói autentikáció
+- Eseménykezelés
+- Jegyműveletek
+- Felhasználókezelés
 
-## License
+## Licenc
 
-MIT 
+MIT
